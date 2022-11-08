@@ -4,8 +4,6 @@ import it.unibo.functional.api.Function;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -119,7 +117,14 @@ public final class Transformers {
      * @param <I> elements type
      */
     public static <I> List<I> reject(final Iterable<I> base, final Function<I, Boolean> test) {
-        return null;
+        return select(base, new Function<I,Boolean>() {
+
+            @Override
+            public Boolean call(I input) {
+                return !test.call(input);
+            }
+            
+        });
     }
 
 }
