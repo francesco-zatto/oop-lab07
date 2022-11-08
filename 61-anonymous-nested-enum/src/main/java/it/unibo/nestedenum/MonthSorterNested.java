@@ -10,11 +10,16 @@ import java.util.Objects;
  */
 public final class MonthSorterNested implements MonthSorter {
 
+    private static final int SHORT_MONTH = 28;
+    private static final int USUAL_MONTH = 30;
+    private static final int LONG_MONTH = 31;
+
     enum Month {
-        JANUARY(31, "JANUARY"), FEBRUARY(28, "FEBRUARY"), MARCH(31, "MARCH"), 
-        APRIL(30, "APRIL"), MAY(31, "MAY"), JUNE(30, "JUNE"), 
-        JULY(31, "JULY"), AUGUST(31, "AUGUST"), SEPTEMBER(30, "SEPTEMBER"),
-        OCTOBER(31, "OCTOBER"), NOVEMBER(30, "NOVEMBER"), DECEMBER(31, "DECEMBER");
+
+        JANUARY(LONG_MONTH, "JANUARY"), FEBRUARY(SHORT_MONTH, "FEBRUARY"), MARCH(LONG_MONTH, "MARCH"), 
+        APRIL(USUAL_MONTH, "APRIL"), MAY(LONG_MONTH, "MAY"), JUNE(USUAL_MONTH, "JUNE"), 
+        JULY(LONG_MONTH, "JULY"), AUGUST(LONG_MONTH, "AUGUST"), SEPTEMBER(USUAL_MONTH, "SEPTEMBER"),
+        OCTOBER(LONG_MONTH, "OCTOBER"), NOVEMBER(USUAL_MONTH, "NOVEMBER"), DECEMBER(LONG_MONTH, "DECEMBER");
 
         private final int days;
         private final String name;
@@ -24,7 +29,7 @@ public final class MonthSorterNested implements MonthSorter {
             this.name = name;
         }
 
-        public Month fromString(String string) {
+        public Month fromString(String string) throws IllegalArgumentException {
             for (Month month : Month.values()) {
                 if (isStringAMonth(string.toUpperCase(), month)) {
                     return month;
