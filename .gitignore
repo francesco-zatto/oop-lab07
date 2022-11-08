@@ -1,3 +1,4 @@
 bin/*
 *.gradle
 *.class
+61-anonymous-nested-enum/gradlew.bat 62-simple-gui/gradlew.bat 63-mvc-gui-reflection/gradlew.bat
