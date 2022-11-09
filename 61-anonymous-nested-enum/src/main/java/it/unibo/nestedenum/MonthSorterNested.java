@@ -2,7 +2,6 @@ package it.unibo.nestedenum;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -29,9 +28,9 @@ public final class MonthSorterNested implements MonthSorter {
             this.name = name;
         }
 
-        public Month fromString(String string) throws IllegalArgumentException {
+        public static Month fromString(String string) throws IllegalArgumentException {
             for (Month month : Month.values()) {
-                if (isStringAMonth(string.toUpperCase(), month)) {
+                if (isStringAMonth(Objects.requireNonNull(string.toUpperCase()), month)) {
                     return month;
                 }
             }
@@ -47,11 +46,25 @@ public final class MonthSorterNested implements MonthSorter {
 
     @Override
     public Comparator<String> sortByDays() {
-        return null;
+        return new Comparator<String>() {
+
+            @Override
+            public int compare(String month1, String month2) {
+                return Month.fromString(month1).days - Month.fromString(month2).days;
+            }
+            
+        };
     }
 
     @Override
     public Comparator<String> sortByOrder() {
-        return null;
+        return new Comparator<String>() {
+
+            @Override
+            public int compare(String month1, String month2) {
+                return Month.fromString(month1).compareTo(Month.fromString(month2));
+            }
+            
+        };
     }
 }
