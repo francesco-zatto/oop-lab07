@@ -15,17 +15,15 @@ public final class MonthSorterNested implements MonthSorter {
 
     enum Month {
 
-        JANUARY(LONG_MONTH, "JANUARY"), FEBRUARY(SHORT_MONTH, "FEBRUARY"), MARCH(LONG_MONTH, "MARCH"), 
-        APRIL(USUAL_MONTH, "APRIL"), MAY(LONG_MONTH, "MAY"), JUNE(USUAL_MONTH, "JUNE"), 
-        JULY(LONG_MONTH, "JULY"), AUGUST(LONG_MONTH, "AUGUST"), SEPTEMBER(USUAL_MONTH, "SEPTEMBER"),
-        OCTOBER(LONG_MONTH, "OCTOBER"), NOVEMBER(USUAL_MONTH, "NOVEMBER"), DECEMBER(LONG_MONTH, "DECEMBER");
+        JANUARY(LONG_MONTH), FEBRUARY(SHORT_MONTH), MARCH(LONG_MONTH), 
+        APRIL(USUAL_MONTH), MAY(LONG_MONTH), JUNE(USUAL_MONTH), 
+        JULY(LONG_MONTH), AUGUST(LONG_MONTH), SEPTEMBER(USUAL_MONTH),
+        OCTOBER(LONG_MONTH), NOVEMBER(USUAL_MONTH), DECEMBER(LONG_MONTH);
 
         private final int days;
-        private final String name;
 
-        private Month(int days, String name) {
+        private Month(int days) {
             this.days = days;
-            this.name = name;
         }
 
         public static Month fromString(String string) throws IllegalArgumentException {
@@ -36,12 +34,16 @@ public final class MonthSorterNested implements MonthSorter {
                     match = month;
                 }
             }
-            return Objects.requireNonNull(match);
+            try {
+                return Objects.requireNonNull(match);
+            } catch (NullPointerException npe) {
+                throw new IllegalArgumentException(string + " is not matchable.");
+            }
         }
 
         private static boolean isStringAMonth(String s, Month m) {
             List<String> ambiguousStrings = List.of("MA", "M", "JU", "J", "A");
-            return !ambiguousStrings.contains(s) && m.name.startsWith(s); 
+            return !ambiguousStrings.contains(s) && m.toString().startsWith(s); 
         }
 
     }
