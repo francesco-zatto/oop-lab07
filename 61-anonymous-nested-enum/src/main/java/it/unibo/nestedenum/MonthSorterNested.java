@@ -29,12 +29,14 @@ public final class MonthSorterNested implements MonthSorter {
         }
 
         public static Month fromString(String string) throws IllegalArgumentException {
-            for (Month month : Month.values()) {
-                if (isStringAMonth(Objects.requireNonNull(string.toUpperCase()), month)) {
-                    return month;
+            Objects.requireNonNull(string);
+            Month match = null;
+            for (Month month : values()) {
+                if (isStringAMonth(string.toUpperCase(), month)) {
+                    match = month;
                 }
             }
-            throw new IllegalArgumentException("Month not found!");
+            return Objects.requireNonNull(match);
         }
 
         private static boolean isStringAMonth(String s, Month m) {
@@ -49,8 +51,8 @@ public final class MonthSorterNested implements MonthSorter {
         return new Comparator<String>() {
 
             @Override
-            public int compare(String month1, String month2) {
-                return Month.fromString(month1).days - Month.fromString(month2).days;
+            public int compare(String string1, String string2) {
+                return Integer.compare(Month.fromString(string1).days, Month.fromString(string2).days);
             }
             
         };
