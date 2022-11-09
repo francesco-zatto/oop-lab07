@@ -9,6 +9,11 @@ import java.util.Objects;
  */
 public final class MonthSorterNested implements MonthSorter {
 
+    private static final String MAY_MARCH_AMBIGUOUS1 = "M"; 
+    private static final String MAY_MARCH_AMBIGUOUS2 = "MA";
+    private static final String JUNE_JULY_AMBIGUOUS = "JU";
+    private static final String JUNE_JULY_JANUARY_AMBIGUOUS = "J";
+    private static final String APRIL_AUGUST_AMBIGUOUS = "A";
     private static final int SHORT_MONTH = 28;
     private static final int USUAL_MONTH = 30;
     private static final int LONG_MONTH = 31;
@@ -42,7 +47,8 @@ public final class MonthSorterNested implements MonthSorter {
         }
 
         private static boolean isStringAMonth(String s, Month m) {
-            List<String> ambiguousStrings = List.of("MA", "M", "JU", "J", "A");
+            List<String> ambiguousStrings = List.of(MAY_MARCH_AMBIGUOUS1, MAY_MARCH_AMBIGUOUS2, 
+                JUNE_JULY_AMBIGUOUS, JUNE_JULY_JANUARY_AMBIGUOUS, APRIL_AUGUST_AMBIGUOUS);
             return !ambiguousStrings.contains(s) && m.toString().startsWith(s); 
         }
 
